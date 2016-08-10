@@ -80,7 +80,7 @@ func readRow(b *testing.B) {
 	*/
 }
 
-func readRowsv2(rowsToRead []string) {
+func readRowsWaitGroup(rowsToRead []string) {
 	ctx, _ := context.WithTimeout(context.Background(), 2*time.Second)
 
 	readRows := func(rows []string) ([]bigtable.Row, error) {
@@ -112,16 +112,16 @@ func readRowsv2(rowsToRead []string) {
 
 }
 
-func readRows10v2(b *testing.B) {
-	readRowsv2(rowKeys10)
+func readRows10WaitGroup(b *testing.B) {
+	readRowsWaitGroup(rowKeys10)
 }
 
-func readRows100v2(b *testing.B) {
-	readRowsv2(rowKeys100)
+func readRows100WaitGroup(b *testing.B) {
+	readRowsWaitGroup(rowKeys100)
 }
 
-func readRows1000v2(b *testing.B) {
-	readRowsv2(rowKeys1000)
+func readRows1000WaitGroup(b *testing.B) {
+	readRowsWaitGroup(rowKeys1000)
 }
 
 func readRows10v1(b *testing.B) {
@@ -134,7 +134,8 @@ func readRows10v1(b *testing.B) {
 	*/
 }
 
-func BenchmarkReadRow1(b *testing.B)       { readRow(b) }
-func BenchmarkReadRows10v2(b *testing.B)   { readRows10v2(b) }
-func BenchmarkReadRows100v2(b *testing.B)  { readRows100v2(b) }
-func BenchmarkReadRows1000v2(b *testing.B) { readRows1000v2(b) }
+//go test -bench=.  -cpu 1000
+func BenchmarkReadRow1(b *testing.B)              { readRow(b) }
+func BenchmarkReadRows10WaitGroup(b *testing.B)   { readRows10WaitGroup(b) }
+func BenchmarkReadRows100WaitGroup(b *testing.B)  { readRows100WaitGroup(b) }
+func BenchmarkReadRows1000WaitGroup(b *testing.B) { readRows1000WaitGroup(b) }
